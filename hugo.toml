@@ -2,6 +2,6 @@ baseURL = 'https://blog.20231106.xyz/'
 languageCode = 'en-us'
 title = 'Hugo Poorops'
 theme = 're-terminal'
-[author]
-  name = "poorops"
-  email = "poorops@163.com"
+[params.author]
+name = "poorops"
+email = "poorops@163.com"
