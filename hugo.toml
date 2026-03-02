@@ -1,4 +1,7 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://blog.20231106.xyz/'
 languageCode = 'en-us'
-title = 'My New Hugo Project'
+title = 'Hugo Poorops'
 theme = 're-terminal'
+[author]
+  name = "poorops"
+  email = "poorops@163.com"
