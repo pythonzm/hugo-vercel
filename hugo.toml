@@ -3,6 +3,9 @@ languageCode = 'en-us'
 title = 'POOROPS'
 theme = 're-terminal'
 pagination.pagerSize = 10
+[taxonomies]
+  tag = "tags"
+  category = "categories"
 [params.author]
  name = "poorops"
  email = "poorops@163.com"
