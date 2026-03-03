@@ -1,6 +1,6 @@
 baseURL = 'https://blog.20231106.xyz/'
 languageCode = 'en-us'
-title = 'Hugo Poorops'
+title = 'POOROPS'
 theme = 're-terminal'
 pagination.pagerSize = 10
 [params.author]
@@ -87,7 +87,7 @@ pagination.pagerSize = 10
     words = "words"
 
     [languages.en.params.logo]
-      logoText = "re-Terminal"
+      logoText = "POOROPS"
       logoHomeLink = "/"
 
     [languages.en.menu]
@@ -101,9 +101,9 @@ pagination.pagerSize = 10
       #   name = "AnItem"
       [[languages.en.menu.main]]
         identifier = "about"
-        name = "About"
+        name = "关于"
         url = "/about"
       [[languages.en.menu.main]]
-        identifier = "showcase"
-        name = "Showcase"
-        url = "/showcase"
+        identifier = "tags"
+        name = "标签"
+        url = "/tags"
