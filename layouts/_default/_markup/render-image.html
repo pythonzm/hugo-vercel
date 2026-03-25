@@ -1,0 +1,7 @@
+{{ $src := .Destination }}
+{{ if strings.HasPrefix $src "/" }}
+  <img src="{{ $src | relURL }}" alt="{{ .Text }}">
+{{ else }}
+  <img src="{{ (printf "/%s" $src) | relURL }}" alt="{{ .Text }}">
+{{ end }}
+
