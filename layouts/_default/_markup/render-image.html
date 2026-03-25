@@ -4,7 +4,7 @@
 {{- else if strings.HasPrefix $src "/" -}}
   <img src="{{ $src | relURL }}" alt="{{ .Text }}">
 {{- else -}}
-  {{- $base := .Page.RelPermalink -}}
+  {{- $base := printf "/%s" .Page.File.Dir -}}  <!-- posts/2026-03-25/ -->
   <img src="{{ (path.Join $base $src) | relURL }}" alt="{{ .Text }}">
 {{- end -}}
 
