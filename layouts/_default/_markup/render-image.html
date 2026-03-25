@@ -1,7 +1,10 @@
-{{ $src := .Destination }}
-{{ if strings.HasPrefix $src "/" }}
+{{- $src := .Destination -}}
+{{- if or (strings.HasPrefix $src "http://") (strings.HasPrefix $src "https://") -}}
+  <img src="{{ $src }}" alt="{{ .Text }}">
+{{- else if strings.HasPrefix $src "/" -}}
   <img src="{{ $src | relURL }}" alt="{{ .Text }}">
-{{ else }}
-  <img src="{{ (printf "/%s" $src) | relURL }}" alt="{{ .Text }}">
-{{ end }}
+{{- else -}}
+  {{- $base := .Page.RelPermalink -}}
+  <img src="{{ (path.Join $base $src) | relURL }}" alt="{{ .Text }}">
+{{- end -}}
 
