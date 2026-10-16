@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Check Your Eligibility for the $100 Brand Reward Program</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .card {
+      max-width: 500px;
+      width: 100%;
+      background: var(--card);
+      border-radius: 16px;
+      padding: 32px 26px;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.45);
+      border: 1px solid #334155;
+      text-align: center;
+    }
+    .step-badge {
+      display: inline-block;
+      background: rgba(59, 130, 246, 0.18);
+      color: #60a5fa;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+    h1 { font-size: 22px; line-height: 1.35; margin-bottom: 10px; }
+    p.sub { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+    .question-box { margin-top: 10px; }
+    .q-title { font-size: 17px; font-weight: 600; margin-bottom: 16px; }
+    .options { display: flex; flex-direction: column; gap: 12px; }
+    .opt-btn {
+      background: #0f172a;
+      color: var(--text);
+      border: 1px solid #334155;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .opt-btn:hover {
+      border-color: var(--accent);
+      background: rgba(59, 130, 246, 0.12);
+      transform: translateY(-1px);
+    }
+    .cta-btn {
+      display: inline-block;
+      width: 100%;
+      background: #10b981;
+      color: #052e16;
+      font-weight: 700;
+      font-size: 17px;
+      padding: 16px;
+      border-radius: 12px;
+      text-decoration: none;
+      margin-top: 14px;
+      transition: all 0.2s;
+    }
+    .cta-btn:hover { background: #059669; color: #fff; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div id="stepBadge" class="step-badge">STEP 1 OF 3</div>
+    <h1 id="mainHeadline">Check Your Eligibility for the $100 Brand Reward Program</h1>
+    <p class="sub">Answer 3 quick questions to see which instant reward offers are available in your country.</p>
+
+    <div id="quizArea" class="question-box">
+      <div id="qTitle" class="q-title">1. Which device do you primarily use daily?</div>
+      <div id="qOptions" class="options">
+        <button class="opt-btn" onclick="nextStep()">📱 Smartphone (iOS / Android)</button>
+        <button class="opt-btn" onclick="nextStep()">💻 Desktop / Laptop (Windows / Mac)</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const FEED_URL = "https://www.cpagrip.com/common/offer_feed_json.php?user_id=2561775&pubkey=536a83531747ab0df8b026a4537328b2&domain=singingfiles.com";
+    const TRACKING_DOMAIN = "singingfiles.com";
+    let bestOfferUrl = "https://singingfiles.com/show.php?l=0&u=2561775&id=74436&tracking_id=quiz_us";
+    let bestOfferTitle = "Claim Your Qualification Now →";
+
+    // Automatically match highest-paying offer for visitor's IP/Geo
+    fetch(FEED_URL + "&limit=5&tracking_id=quiz_prelander")
+      .then(r => r.json())
+      .then(data => {
+        if (!data || !Array.isArray(data.offers) || !data.offers.length) return;
+        const top = data.offers.slice().sort((a, b) => parseFloat(b.payout || 0) - parseFloat(a.payout || 0))[0];
+        if (top && top.offerlink) {
+          bestOfferUrl = top.offerlink.replace('www.cpagrip.com', TRACKING_DOMAIN) + '&tracking_id=quiz_prelander';
+          bestOfferTitle = "Claim: " + top.title + " →";
+        }
+      })
+      .catch(() => {});
+
+    const questions = [
+      {
+        badge: "STEP 2 OF 3",
+        q: "2. Are you at least 18 years old?",
+        opts: ["✅ Yes, I am 18 or older", "❌ No, under 18"]
+      },
+      {
+        badge: "STEP 3 OF 3",
+        q: "3. Where should we send your reward confirmation?",
+        opts: ["📧 Via Active Email Address", "💬 Via SMS / Notification"]
+      }
+    ];
+    let idx = 0;
+
+    function nextStep() {
+      const badge = document.getElementById('stepBadge');
+      const title = document.getElementById('qTitle');
+      const opts = document.getElementById('qOptions');
+
+      if (idx < questions.length) {
+        const cur = questions[idx++];
+        badge.textContent = cur.badge;
+        title.textContent = cur.q;
+        opts.innerHTML = cur.opts.map(o => `<button class="opt-btn" onclick="nextStep()">${o}</button>`).join('');
+      } else {
+        badge.textContent = "QUALIFIED ✅";
+        title.textContent = "Congratulations! 1 Spot Reserved For Your Region.";
+        opts.innerHTML = `
+          <p style="font-size:14px;color:#94a3b8;margin-bottom:8px;">
+            Enter your valid email on the next page to complete registration and lock in your reward.
+          </p>
+          <a class="cta-btn" href="${bestOfferUrl}">${bestOfferTitle}</a>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>

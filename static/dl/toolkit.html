@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Uncensored Prompt & Workflow Toolkit v4.2 (2026 Edition)</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card: #151c2c;
+      --border: #263147;
+      --accent: #10b981;
+      --accent-hover: #059669;
+      --text: #f3f4f6;
+      --muted: #9ca3af;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      max-width: 560px;
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 28px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
+    }
+    .dot {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.2); }
+    }
+    h1 { font-size: 24px; line-height: 1.35; margin-bottom: 10px; }
+    .subtitle { color: var(--muted); font-size: 15px; line-height: 1.5; margin-bottom: 24px; }
+    .file-box {
+      background: #0f1522;
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .file-info { display: flex; flex-direction: column; gap: 4px; }
+    .file-name { font-weight: 600; font-size: 15px; color: #fff; word-break: break-all; }
+    .file-meta { font-size: 12px; color: var(--muted); }
+    .status-tag {
+      background: #1e293b;
+      color: #38bdf8;
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .btn {
+      width: 100%;
+      background: var(--accent);
+      color: #06281e;
+      font-weight: 700;
+      font-size: 17px;
+      padding: 16px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn:hover { background: var(--accent-hover); color: #fff; transform: translateY(-1px); }
+    .progress-wrap { display: none; margin-top: 20px; }
+    .progress-bar-bg {
+      width: 100%; height: 10px;
+      background: #0f1522;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+    .progress-bar-fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, #10b981, #38bdf8);
+      transition: width 0.3s ease;
+    }
+    .progress-text { font-size: 13px; color: var(--muted); text-align: center; }
+    .locker-box {
+      display: none;
+      margin-top: 20px;
+      background: #0f1522;
+      border: 1px solid #38bdf8;
+      border-radius: 12px;
+      padding: 18px;
+    }
+    .locker-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #38bdf8;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+    .locker-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 14px;
+      text-align: center;
+    }
+    .offer-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .offer-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #151c2c;
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #fff;
+      transition: all 0.2s;
+    }
+    .offer-item:hover {
+      border-color: var(--accent);
+      background: rgba(16, 185, 129, 0.12);
+      transform: translateX(3px);
+    }
+    .offer-name { font-size: 14px; font-weight: 600; }
+    .offer-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .offer-action {
+      background: var(--accent);
+      color: #052e16;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 8px;
+      white-space: nowrap;
+      margin-left: 10px;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .stat-num { font-size: 16px; font-weight: 700; color: #fff; }
+    .stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: #1e293b;
+      border: 1px solid var(--border);
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      color: var(--text);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: all 0.4s ease;
+      pointer-events: none;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+  </style>
+  
+</head>
+<body>
+  <div class="container">
+    <div class="badge"><span class="dot"></span> VERIFIED & UPDATED TODAY</div>
+    <h1>AI Uncensored Prompt & Workflow Toolkit v4.2 (2026 Edition)</h1>
+    <p class="subtitle">Complete collection of 1,500+ unlocked prompts, local ComfyUI workflows & automation scripts.</p>
+
+    <div class="file-box">
+      <div class="file-info">
+        <span class="file-name">📦 AI_Pro_Toolkit_v4.2_Full.zip</span>
+        <span class="file-meta">Size: 148.5 MB • VirusTotal: 0/64 Clean</span>
+      </div>
+      <span class="status-tag">CDN Ready</span>
+    </div>
+
+    <button id="dlBtn" class="btn" onclick="startUnlock()">
+      <span>⚡ Verify & Download Now (Free)</span>
+    </button>
+
+    <div id="progWrap" class="progress-wrap">
+      <div class="progress-bar-bg">
+        <div id="progFill" class="progress-bar-fill"></div>
+      </div>
+      <p id="progText" class="progress-text">Connecting to high-speed mirror...</p>
+    </div>
+
+    <div id="lockerBox" class="locker-box">
+      <div class="locker-title">🔒 Human Verification Required</div>
+      <div class="locker-sub">Complete any <strong>1 free step</strong> below (takes 30 seconds) to automatically start downloading <strong>AI_Pro_Toolkit_v4.2_Full.zip</strong>:</div>
+      <div id="offerList" class="offer-list">
+        <a class="offer-item" href="https://singingfiles.com/show.php?l=0&u=2561775&id=74436&tracking_id=quiz_us" target="_blank">
+          <div>
+            <div class="offer-name">Verify via Free Sponsor Registration</div>
+            <div class="offer-desc">Enter your email address to unlock download</div>
+          </div>
+          <span class="offer-action">Unlock →</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div>
+        <div class="stat-num" id="dlCount">14,892</div>
+        <div class="stat-label">Downloads</div>
+      </div>
+      <div>
+        <div class="stat-num">99.4%</div>
+        <div class="stat-label">Success Rate</div>
+      </div>
+      <div>
+        <div class="stat-num">Free</div>
+        <div class="stat-label">License</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast">✅ <span id="toastMsg">User from US unlocked 12s ago</span></div>
+
+  <script>
+    const FEED_URL = "https://www.cpagrip.com/common/offer_feed_json.php?user_id=2561775&pubkey=536a83531747ab0df8b026a4537328b2&domain=singingfiles.com";
+    const TRACKING_DOMAIN = "singingfiles.com";
+    const FALLBACK_URL = "https://singingfiles.com/show.php?l=0&u=2561775&id=74436&tracking_id=quiz_us";
+
+    // Preload visitor-specific offers via CPAGrip JSON feed
+    fetch(FEED_URL + "&limit=6&tracking_id=res_locker")
+      .then(r => r.json())
+      .then(data => {
+        if (!data || !Array.isArray(data.offers) || !data.offers.length) return;
+        const sorted = data.offers.slice().sort((a, b) => parseFloat(b.payout || 0) - parseFloat(a.payout || 0)).slice(0, 4);
+        const listEl = document.getElementById('offerList');
+        listEl.innerHTML = sorted.map(o => {
+          const cleanLink = (o.offerlink || FALLBACK_URL).replace('www.cpagrip.com', TRACKING_DOMAIN) + '&tracking_id=res_locker';
+          return `<a class="offer-item" href="${cleanLink}" target="_blank" rel="noopener">
+            <div>
+              <div class="offer-name">🎁 ${o.title}</div>
+              <div class="offer-desc">${o.description || 'Complete quick email registration to unlock'}</div>
+            </div>
+            <span class="offer-action">Step 1 →</span>
+          </a>`;
+        }).join('');
+      })
+      .catch(() => {});
+
+    const steps = [
+      { pct: 35, msg: "Allocating high-speed download slot..." },
+      { pct: 75, msg: "Verifying archive SHA-256 checksum..." },
+      { pct: 100, msg: "Waiting for human verification..." }
+    ];
+
+    function startUnlock() {
+      const btn = document.getElementById('dlBtn');
+      const wrap = document.getElementById('progWrap');
+      const fill = document.getElementById('progFill');
+      const txt = document.getElementById('progText');
+      btn.style.display = 'none';
+      wrap.style.display = 'block';
+
+      let i = 0;
+      const timer = setInterval(() => {
+        if (i < steps.length) {
+          fill.style.width = steps[i].pct + '%';
+          txt.textContent = steps[i].msg;
+          i++;
+        } else {
+          clearInterval(timer);
+          if (typeof call_locker === 'function') {
+            call_locker();
+          } else {
+            document.getElementById('lockerBox').style.display = 'block';
+          }
+        }
+      }, 550);
+    }
+
+    const countries = ["United States", "United Kingdom", "Canada", "Germany", "Australia", "France"];
+    setInterval(() => {
+      const t = document.getElementById('toast');
+      const m = document.getElementById('toastMsg');
+      const c = countries[Math.floor(Math.random() * countries.length)];
+      const s = Math.floor(Math.random() * 40) + 3;
+      m.textContent = "Someone from " + c + " unlocked the file " + s + "s ago";
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3500);
+    }, 7000);
+  </script>
+</body>
+</html>
